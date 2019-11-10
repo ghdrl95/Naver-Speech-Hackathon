@@ -1,0 +1,29 @@
+#!/bin/sh
+
+BATCH_SIZE=8
+WORKER_SIZE=2
+GPU_SIZE=1
+CPU_SIZE=4
+DATASET="sr-hack-2019-dataset"
+MAX_EPOCHS=30
+
+nsml run -g 2 -c 4 -d sr-hack-2019-dataset -a "--batch_size 32 --workers 2 --use_attention --bidirectional --layer_size 5 --max_epochs 1000"
+
+nsml run -g 2 -c 8 -d sr-hack-2019-dataset -a "--batch_size 40 --workers 5 --use_attention --bidirectional --layer_size 4 --max_epochs 1000000"
+
+���� ����
+nsml run -g 2 -c 8 --memory 55G -d sr-hack-2019-dataset -a "--batch_size 40 --workers 5 --use_attention --bidirectional --layer_size 4 --max_epochs 1000000"
+
+
+�� ����
+nsml model ls ���Ǹ�
+
+�� ����
+nsml submit ���Ǹ� checkpoint��
+
+���� ����
+nsml rm -f ���Ǹ�
+
+
+nsml run -g 2 -c 8 --memory 55G -d sr-hack-2019-50000 -a "--batch_size 40 --workers 5 --use_attention --bidirectional --layer_size 4 --max_epochs 1000000"
+nsml run -g 1 -c 8 --memory 55G -d sr-hack-2019-50000 -a "--batch_size 40 --workers 5 --use_attention --bidirectional --layer_size 4 --max_epochs 1000000"
